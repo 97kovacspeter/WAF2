@@ -1,0 +1,130 @@
+﻿@model int?
+@{
+    ViewData["Title"] = "Cart";
+}
+
+<h2>A kosarad</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Kategóriák
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            @foreach (var item in @ViewBag.CategoriesBag)
+            {
+                <td>
+                    <a asp-action="CategoryPage" asp-route-id="@item.Id"><div id="black-box">@item.Name</div></a>
+                </td>
+            }
+        </tr>
+    </tbody>
+</table>
+
+
+@{ int sum = 0; }
+
+<table class="table">
+    @if (@Model != -1)
+    {
+        <thead>
+            <tr>
+                <th>
+                    Étel/ital neve
+                <td>
+                    Leírás
+                </td>
+                <td>
+                    Csípős-e
+                </td>
+                <td>
+                    Vegetáriánus-e
+                </td>
+                <td>
+                    Ár
+                </td>
+                </th>
+            </tr>
+        </thead>
+    }
+    <tbody>
+        @if (@ViewBag.OrderBag != null && @Model != -1)
+        {
+            @foreach (var item in @ViewBag.OrderBag)
+            {
+                sum += item.Price;
+                <tr>
+
+                    <td>
+                        @item.Name
+                    </td>
+                    <td>
+                        @item.Description
+                    </td>
+                    <td>
+                        @if (@item.Spicy)
+                        {
+                            <text>Igen</text>
+                        }
+                        else
+                        {
+                            <text>Nem</text>
+                        }
+                    </td>
+                    <td>
+                        @if (@item.Vegetarian)
+                        {
+                            <text>Igen</text>
+                        }
+                        else
+                        {
+                            <text>Nem</text>
+                        }
+                    </td>
+                    <td>
+                        @item.Price<text>,- Ft</text>
+                    </td>
+                    <td>
+                        <a asp-action="RemovedFromCart" asp-route-id="@item.Id">
+                            <div id="red-box">Töröl</div>
+                        </a>
+                    </td>
+                </tr>
+            }
+        }
+        else
+        {
+            <div id="red-box">
+                <b>Üres a kosarad!</b>
+            </div>
+        }
+    </tbody>
+</table>
+@if (@Model != -1)
+{
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <td>
+                    <div id="black-box">
+                        <b>Összesen: @sum,- Ft</b>
+                    </div>
+                </td>
+                <td>
+                    <a asp-action="RemovedFromCart" asp-route-id="-1">
+                        <div id="red-box"><b>Kosár ürítése</b></div>
+                    </a>
+                </td>
+                <td>
+                    <a asp-action="SendOrder"><div id="green-box"><b>Rendelés leadása</b></div></a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+}

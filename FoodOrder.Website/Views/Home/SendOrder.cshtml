@@ -1,0 +1,39 @@
+﻿@using FoodOrder.Persistence
+@model Order
+@{
+    ViewData[ "Title" ] = "SendOrder";
+}
+<div id="black-box">
+    <h2>Rendelés véglegesítése</h2>
+</div>
+
+<div class="row">
+    <div class="col-md-5">
+        <form asp-controller="Home" asp-action="End" method="post">
+            <div asp-validation-summary="All" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Name"></label>
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Address"></label>
+                <input asp-for="Address" class="form-control" />
+                <span asp-validation-for="Address" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Phone"></label>
+                <input asp-for="Phone" class="form-control" />
+                <span asp-validation-for="Phone" class="text-danger"></span>
+            </div>
+            <div>
+                <button class="btn btn-default"  id="green-box" type="submit">Elküld</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+@section Scripts {
+    @await Html.PartialAsync( "_ValidationScriptsPartial" )
+}

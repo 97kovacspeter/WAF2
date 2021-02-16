@@ -1,0 +1,75 @@
+﻿<Window x:Class="FoodOrder.Desktop.View.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+        xmlns:local="clr-namespace:FoodOrder.Desktop.View"
+        xmlns:vm="clr-namespace:FoodOrder.Desktop.ViewModel"
+        mc:Ignorable="d"
+        Title="Rendelések" Height="600" Width="850"
+        x:Name="MainWnd">
+    <StackPanel>
+        <Grid Margin="0,0,0,10">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <Button Content="Kijelentkezés" Grid.Column="0" Command="{Binding LogoutCommand}" Height="30"/>
+            <Button Content="Új étel/ital létrehozása" Grid.Column="1" Command="{Binding NewItemCommand}" Height="30"/>
+        </Grid>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <TextBox x:Name="SearchTextBox" />
+            <Button x:Name="SearchButton" Grid.Column="1" Content="Keresés" Command="{Binding SearchCommand}" CommandParameter="{Binding ElementName=SearchTextBox}"/>
+        </Grid>
+        <Grid Margin="0,10,0,0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <Button Content="Minden rendelés" Grid.Column="0" Command="{Binding AllCommand}" Height="30"/>
+            <Button Content="Teljesített rendelések" Grid.Column="1" Command="{Binding DeliveredCommand}" Height="30"/>
+            <Button Content="Teljesítetlen rendelések" Grid.Column="2" Command="{Binding UndeliveredCommand}" Height="30"/>
+        </Grid>
+        <DataGrid x:Name="lists" Height="300" ItemsSource="{Binding Lists}" AutoGenerateColumns="False" CanUserAddRows="False" >
+            <DataGrid.Columns>
+                <DataGridTemplateColumn Header="Rendelések" Width="70" IsReadOnly="False">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button x:Name="CheckButton" Content="Megtekint"
+                                    Command="{Binding DataContext.SelectCommand, ElementName=MainWnd}"
+                                    CommandParameter="{Binding ElementName=lists, Path=SelectedItem}" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTextColumn Header="Név" Binding="{Binding Name}" IsReadOnly="True"/>
+                <DataGridTextColumn Header="Cím" Binding="{Binding Address}" IsReadOnly="True"/>
+                <DataGridTextColumn Header="Telefon" Binding="{Binding Phone}" IsReadOnly="True"/>
+                <DataGridTextColumn Header="Teljesített" Binding="{Binding Delivered }" IsReadOnly="True"/>
+                <DataGridTextColumn Header="Összeg" Binding="{Binding Sum}" IsReadOnly="True"/>
+                <DataGridTextColumn Header="Rendelés időpontja" Binding="{Binding OrderedDate}" IsReadOnly="True"/>
+                <DataGridTextColumn Header="Kiszállítás időpontja" Binding="{Binding DeliveredDate}" IsReadOnly="True"/>
+                <DataGridTemplateColumn Header="Teljesítettnek jelöl" IsReadOnly="False">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button x:Name="CheckButton" Content="Jelöl"
+                                    Command="{Binding DataContext.DeliverCommand, ElementName=MainWnd}"
+                                    CommandParameter="{Binding ElementName=lists, Path=SelectedItem}" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+        <DataGrid VerticalContentAlignment="Stretch" ItemsSource="{Binding Items}" IsReadOnly="True"
+                  AutoGenerateColumns="False">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Rendelések" Binding="{Binding Name}" />
+            </DataGrid.Columns>
+        </DataGrid>
+    </StackPanel>
+</Window>

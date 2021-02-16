@@ -1,0 +1,117 @@
+﻿@model IEnumerable<FoodOrder.Persistence.DrinkOrDish>
+
+@{
+    ViewData[ "Title" ] = "Home";
+}
+
+<h2>FoodOrder</h2>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Kategóriák
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            @foreach (var item in @ViewBag.CategoriesBag)
+            {
+                <td>
+                    <a asp-action="CategoryPage" asp-route-id="@item.Id"><div id="black-box">@item.Name</div></a>
+                </td>
+            }
+        </tr>
+    </tbody>
+</table>
+<table>
+    <thead>
+        <tr>
+            <th>
+                <div id="black-box">
+                    10 legtöbbet rendelt termék:
+                </div>
+            </th>
+        </tr>
+    </thead>
+</table>
+<table class="table">
+    <thead>
+        <tr>
+    <thead>
+        <tr>
+            <th>
+                Étel/ital neve
+            <td>
+                Népszerűség
+            </td>
+            <td>
+                Leírás
+            </td>
+            <td>
+                Csípős-e
+            </td>
+            <td>
+                Vegetáriánus-e
+            </td>
+            <td>
+                Ár
+            </td>
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in @ViewBag.FoodBag)
+        {
+            <tr>
+                <td>
+                    @item.Name
+                </td>
+                <td>
+                    <div id="yes">
+                        @item.Fame
+                    </div>
+                </td>
+                <td>
+                    @item.Description
+                </td>
+                <td>
+                    @if (@item.Spicy)
+                    {
+                        <div id="yes">
+                            <text>Igen</text>
+                        </div>
+                    }
+                    else
+                    {
+                        <div id="no">
+                            <text>Nem</text>
+                        </div>
+                    }
+                </td>
+                <td>
+                    @if (@item.Vegetarian)
+                    {
+                        <div id="yes">
+                            <text>Igen</text>
+                        </div>
+                    }
+                    else
+                    {
+                        <div id="no">
+                            <text>Nem</text>
+                        </div>
+                    }
+                </td>
+                <td>
+                    @item.Price<text>,- Ft</text>
+                </td>
+                <td>
+                    <a asp-action="AddedToCart" asp-route-id="@item.Id"><div id="green-box">Kosárhoz ad</div></a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+

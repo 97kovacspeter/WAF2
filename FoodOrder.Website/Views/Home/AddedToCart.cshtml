@@ -1,0 +1,52 @@
+﻿@model int
+@{
+    ViewData["Title"] = "AddedToCart";
+}
+
+@if (@Model != -1)
+{
+    <div id="green-box">
+        <h2>Sikeresen a kosárhoz adta az ételt/italt!</h2>
+    </div>
+}
+else
+{
+    <div id="red-box">
+        <h2>Nem sikerült hozzáadni az ételt/italt, elérte a felső korlátot!</h2>
+    </div>
+}
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Kategóriák
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            @foreach (var item in @ViewBag.CategoriesBag)
+            {
+                <td>
+                    <a asp-action="CategoryPage" asp-route-id="@item.Id"><div id="black-box">@item.Name</div></a>
+                </td>
+            }
+        </tr>
+    </tbody>
+</table>
+@if (@Model != -1)
+{
+
+    <div id="black-box">
+        <a asp-action="CategoryPage" asp-route-id="@Model">Vissza</a>
+    </div>
+}
+else
+{
+
+    <div id="black-box">
+        <a asp-action="Index">Vissza</a>
+    </div>
+}
+

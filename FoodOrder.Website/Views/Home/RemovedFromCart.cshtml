@@ -1,0 +1,32 @@
+﻿
+@{
+    ViewData[ "Title" ] = "RemovedFromCart";
+}
+<div id="green-box">
+    <h2>Sikeres törlés</h2>
+</div>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Kategóriák
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            @foreach (var item in @ViewBag.CategoriesBag)
+            {
+                <td>
+                    <a asp-action="CategoryPage" asp-route-id="@item.Id"><div id="black-box">@item.Name</div></a>
+                </td>
+            }
+        </tr>
+    </tbody>
+</table>
+
+<div id="black-box">
+    <a asp-action="Cart">Vissza</a>
+</div>
